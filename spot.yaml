@@ -1,0 +1,24 @@
+apiVersion: karpenter.sh/v1alpha5
+kind: Provisioner
+metadata:
+  name: my-provisioner
+spec:
+  concurrency: 10
+  capacity:
+    min: 0
+    max: 50
+    target: 10
+  utilization:
+    threshold: 80
+  provider:
+    type: aws
+    aws:
+      instanceProfile: KarpenterNodeInstanceProfile-nonprod
+      subnet: my-subnet
+      securityGroups:
+        - my-security-group
+      spot:
+        maxPrice: 0.05
+        instanceTypes:
+          - m5.large
+
